@@ -1,6 +1,6 @@
 === Lumia Testimonials ===
 Contributors: pv.jinesh
-Donate link: 
+Donate link: http://weblumia.com/donate
 Tags: customer, quotations, quote, quotes, testimonial, testimonials, testimony, widget, testi
 Requires at least: 3.0
 Tested up to: 3.5.1
@@ -33,7 +33,7 @@ Support
 
 So that others can share in the answer, please submit your support requests through the WordPress forums for [Lumia Testimonials ](http://wordpress.org/support/plugin/lumia_testimonial).
 
-If you want private or priority support, please [donate](http://weblumia.com/donate) at least $5 USD to cover my time.
+If you want private or priority support, please [donate](http://weblumia.com/donate).
 
 == Installation ==
 
