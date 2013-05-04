@@ -131,8 +131,8 @@ class Lumia_Testimonials {
 		<script type="text/javascript">
 		jQuery( '.wl-testimonial' ).bxSlider({
 			auto: true,
-			pause:4000,
-			speed:1200,
+			pause:5000,
+			speed:500,
 			mode:'fade',
 			controls:false
 		});
