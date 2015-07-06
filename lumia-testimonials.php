@@ -217,22 +217,30 @@ function display_lumia_testimonial_meta_box() {
 
 	wp_nonce_field( 'lumia_testimonials', 'lumia_testimonials' );
 	?>
-    <table>
+    <style>
+	.form-table td {
+		padding: 10px;
+	}
+	.form-table td input {
+		width: 100%
+	}
+	</style>
+    <table class="form-table">
         <tr>
-            <td style="width: 150px">Location : </td>
-            <td><input type="text" size="130" name="testimonial[location]" value="<?php echo $location; ?>" /></td>
+            <td>Location : </td>
+            <td><input type="text" name="testimonial[location]" value="<?php echo $location; ?>" /></td>
         </tr>
         <tr>
-            <td style="width: 150px">Email Address: </td>
-            <td><input type="text" size="130" name="testimonial[email]" value="<?php echo $email; ?>" /></td>
+            <td>Email Address: </td>
+            <td><input type="text" name="testimonial[email]" value="<?php echo $email; ?>" /></td>
         </tr>
         <tr>
-            <td style="width: 150px">Company Name : </td>
-            <td><input type="text" size="130" name="testimonial[company]" value="<?php echo $company; ?>" /></td>
+            <td>Company Name : </td>
+            <td><input type="text" name="testimonial[company]" value="<?php echo $company; ?>" /></td>
         </tr>
         <tr>
-            <td style="width: 150px">Website URL : </td>
-            <td><input type="text" size="130" name="testimonial[website]" value="<?php echo $website; ?>" /></td>
+            <td>Website URL : </td>
+            <td><input type="text" name="testimonial[website]" value="<?php echo $website; ?>" /></td>
         </tr>
     </table>
 	<?php
