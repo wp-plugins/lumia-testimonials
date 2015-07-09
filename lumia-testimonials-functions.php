@@ -6,48 +6,108 @@ class Lumia_Testimonial_Functions{
 	
 	public function lumia_testimonial_all() {
 		global $post;
+		
+		$options = get_option( 'lt_settings' );
+		$display_mode = isset( $options['display_mode'] ) ? esc_attr( $options['display_mode'] ) : '';
+		ob_start();
+		
 		query_posts( 'post_type=lumia_testimonials&posts_per_page=-1&orderby=menu_order&order=ASC' );
 		
-		while ( have_posts() ) : the_post();
-			$testimonial_data			=	get_post_meta( $post->ID, '_testimonial', true );
-			if( $testimonial_data['company'] != '' ){
-				$testimonial_meta		=	'<strong>' . $testimonial_data['company'] . '</strong>,';
-			}
+		while ( have_posts() ) : the_post();		
 			
-			$testimonial_meta			.=		'<small> ' .$post->post_title;
-			if( $testimonial_data['location'] != '' ){
-				$testimonial_meta		.=		' ( ' . $testimonial_data['location'] . ' )</small>';
-			}else{
-				$testimonial_meta		.=		'</small>';
-			}
-			if( $testimonial_data['email'] != '' ){
-				$testimonial_email		=	'<span class="testi_email"><a href="mailto:' . $testimonial_data['email'] . '">' . $testimonial_data['email'] . '</a></span>';
-			}else{
-				$testimonial_email		=	'';
-			}
-			
-			if( $testimonial_data['website'] != '' ){
-				
-				if( preg_match( "#https?://#", $testimonial_data['website'] ) === 0 ){
-					$link				=	str_replace( array( 'http://', 'https://' ), array( 'http://', 'http://' ), $testimonial_data['website'] );
-				}else{
-					$link				=	'http://' . $testimonial_data['website'];
+			if( $display_mode === 'normal' ) {	
+				$testimonial_data			=	get_post_meta( $post->ID, '_testimonial', true );
+				if( $testimonial_data['company'] != '' ){
+					$testimonial_meta		=	'<strong>' . $testimonial_data['company'] . '</strong>,';
 				}
-				$testimonial_web		=	'<span class="testi_web"><a href="' . $link . '" target="_blank">' . str_replace( array( 'http://', 'https://' ), array( '', '' ), $testimonial_data['website'] ) . '</a></span>';
-			}else{
-				$testimonial_web		=	'';
+				
+				$testimonial_meta			.=		'<small> ' .$post->post_title;
+				if( $testimonial_data['location'] != '' ){
+					$testimonial_meta		.=		' ( ' . $testimonial_data['location'] . ' )</small>';
+				}else{
+					$testimonial_meta		.=		'</small>';
+				}
+				
+				if( $testimonial_data['email'] != '' ){
+					$testimonial_email		=	'<span class="testi_email"><a href="mailto:' . $testimonial_data['email'] . '">' . $testimonial_data['email'] . '</a></span>';
+				}else{
+					$testimonial_email		=	'';
+				}
+				
+				if( $testimonial_data['website'] != '' ){
+					
+					if( preg_match( "#https?://#", $testimonial_data['website'] ) === 0 ){
+						$link				=	str_replace( array( 'http://', 'https://' ), array( 'http://', 'http://' ), $testimonial_data['website'] );
+					}else{
+						$link				=	'http://' . $testimonial_data['website'];
+					}
+					$testimonial_web		=	'<span class="testi_web"><a href="' . $link . '" target="_blank">' . str_replace( array( 'http://', 'https://' ), array( '', '' ), $testimonial_data['website'] ) . '</a></span>';
+				}else{
+					$testimonial_web		=	'';
+				}
+			} else {
+				$testimonial_data			=	get_post_meta( $post->ID, '_testimonial', true );
+				if( $testimonial_data['company'] != '' ){
+					$company		=	$testimonial_data['company'];
+				}
+				
+				$location			=		'<small> ' .$post->post_title;
+				if( $testimonial_data['location'] != '' ){
+					$location		.=		' ( ' . $testimonial_data['location'] . ' )</small>';
+				}else{
+					$location		.=		'</small>';
+				}
+				
+				
+				if( $testimonial_data['email'] != '' ){
+					$testimonial_email		=	'<a href="mailto:' . $testimonial_data['email'] . '">' . $testimonial_data['email'] . '</a>';
+				}else{
+					$testimonial_email		=	'';
+				}
+				
+				if( $testimonial_data['website'] != '' ){
+					
+					if( preg_match( "#https?://#", $testimonial_data['website'] ) === 0 ){
+						$link				=	str_replace( array( 'http://', 'https://' ), array( 'http://', 'http://' ), $testimonial_data['website'] );
+					}else{
+						$link				=	'http://' . $testimonial_data['website'];
+					}
+					$testimonial_web		=	'<a href="' . $link . '" target="_blank">' . str_replace( array( 'http://', 'https://' ), array( '', '' ), $testimonial_data['website'] ) . '</a>';
+				}else{
+					$testimonial_web		=	'';
+				}				
 			}
-			
-			$html		.=	'<div class="test_box">
-								' . get_the_post_thumbnail( $post->ID, 'full' ) . '
-								<p>' . $post->post_content . '</p>
-								<span>-' . $testimonial_meta . '</span>' . $testimonial_email . $testimonial_web . '
-							</div>';
+				 
+			if( $display_mode === 'normal' ) {
+				?>	
+				<div class="test_box">
+                    <?php echo get_the_post_thumbnail( $post->ID, 'full' );?>
+                    <?php echo apply_filters( 'the_content', $post->post_content );?>
+                    <span>-<?php echo $testimonial_meta;?></span><?php echo $testimonial_email . $testimonial_web; ?>
+                    <div class="clear"></div>
+                </div>
+                                
+                <?php                
+			} else {
+				?>
+				<div class="test_box colum-4">
+                    <?php echo get_the_post_thumbnail( $post->ID, 'full' );?>
+                    <?php echo apply_filters( 'the_content', $post->post_content );?>
+                    <h3><?php echo $company;?></h3>
+                    <?php echo $location;?>
+					<ul>
+						<li class="email"><?php echo $testimonial_email;?>
+                        <li class="web"><?php echo $testimonial_web; ?>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+                <?php
+			}
 		
 		endwhile;
 		wp_reset_query();
-		
-		echo $html;
+        
+        echo ob_get_clean();
 	}
 	
 	public function lumia_testimonial_widget(){

@@ -2,8 +2,8 @@
 /*
 Plugin Name: Lumia Testimonials
 Plugin URI: http://www.weblumia.com/lumia-testimonials
-Description: Testimonials plugin allows you to display random or selected testimonials, or text with images.
-Version: 1.8.3
+Description: Responsive testimonials plugin allows you to display random or selected testimonials, or text with images.
+Version: 1.8.5
 Author: Jinesh.P.V
 Author URI: http://www.weblumia.com/
 */
@@ -27,9 +27,13 @@ Author URI: http://www.weblumia.com/
 
 class Lumia_Testimonials {
 	
+	private $options;
+	
 	/* constructor function for class*/
 	public function __construct() {
 		add_action( 'init', array( &$this, 'init' ) );
+		add_action( 'admin_init', array( &$this, 'page_init' ) );
+		add_action( 'admin_menu', array( &$this, 'lumia_testimonials_settings' ) );		
 		register_activation_hook( __FILE__, array( &$this, 'lumia_activation' ) );
 		register_deactivation_hook( __FILE__, array( &$this, 'lumia_deactivation' ) );
 		add_action( 'widgets_init', array( &$this, 'widgets_init' ) );
@@ -114,9 +118,12 @@ class Lumia_Testimonials {
 	}
 	
 	public static function lumia_styles() {
+		wp_register_style('lumia-googleFonts', 'http://fonts.googleapis.com/css?family=Oswald|Open+Sans|Fontdiner+Swanky|Crafty+Girls|Pacifico|Satisfy|Gloria+Hallelujah|Bangers|Audiowide|Sacramento');
+        wp_enqueue_style( 'lumia-googleFonts');
+		
 		if( !is_admin() ){
-			wp_register_style( 'lumia-testimonial', plugins_url( 'lumia-testimonials-style.css', __FILE__ ) );
-			wp_enqueue_style( 'lumia-testimonial' );
+			wp_register_style( 'testimonials-style', plugins_url( '/lumia-testimonials-style.php', __FILE__ ) );
+			wp_enqueue_style( 'testimonials-style' );
 		}
 	}
 	
@@ -156,6 +163,170 @@ class Lumia_Testimonials {
 		$wlFunctions = new Lumia_Testimonial_Functions;
 		$wlFunctions->lumia_testimonial_widget();
 	}
+		 
+	public function lumia_testimonials_settings() {
+		
+		add_submenu_page(
+            'edit.php?post_type=lumia_testimonials', 
+            'Settings', 
+			'Settings',
+            'manage_options', 
+            'lumia-testimonials-setting', 
+            array( $this, 'create_lumia_testimonials_admin_page' )
+        );
+	} 
+
+    /**
+     * Options page callback
+     */
+	 
+    public function create_lumia_testimonials_admin_page() {
+		
+        // Set class property
+        $this->options = get_option( 'lt_settings' );
+		$display_mode = isset( $this->options['display_mode'] ) ? esc_attr( $this->options['display_mode'] ) : '';
+		$background = isset( $this->options['background'] ) ? esc_attr( $this->options['background'] ) : '';
+		$title_color = isset( $this->options['title_color'] ) ? esc_attr( $this->options['title_color'] ) : '';
+		$font_family = isset( $this->options['font_family'] ) ? esc_attr( $this->options['font_family'] ) : '';
+		$content_color = isset( $this->options['content_color'] ) ? esc_attr( $this->options['content_color'] ) : '';
+		$location_color = isset( $this->options['location_color'] ) ? esc_attr( $this->options['location_color'] ) : '';
+		$email_color = isset( $this->options['email_color'] ) ? esc_attr( $this->options['email_color'] ) : '';
+		$company_color = isset( $this->options['company_color'] ) ? esc_attr( $this->options['company_color'] ) : '';
+		$website_color = isset( $this->options['website_color'] ) ? esc_attr( $this->options['website_color'] ) : '';
+        ?>
+        <style>
+		.form-table {
+			width:70%;
+		}
+		.form-table td {
+			padding: 10px;
+		}
+		.form-table td input {
+			width: 100%
+		}
+		.form-table td input.small {
+			width: 20%
+		}
+		</style>
+        <div class="wrap">
+            <h2>My Settings</h2>           
+            <form method="post" action="options.php">
+            <?php settings_fields( 'lumia_testimonials' ); ?>
+            <table class="form-table">
+                    <tr>
+                        <td>Display Mode: </td>
+                        <td>
+                            <select name="lt_settings[display_mode]">
+                                <option>Select Display Mode</option>
+                                <option value="normal" <?php selected( $display_mode, 'normal' ); ?>>Normal</option>
+                                <option value="modern" <?php selected( $display_mode, 'modern' ); ?>>Modern</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Background: </td>
+                        <td><input type="color" name="lt_settings[background]" value="<?php echo $background; ?>" class="small" /></td>
+                    </tr>
+                    <tr>
+                        <td>Font Family: </td>
+                        <td>
+                            <select id="font_family" name="lt_settings[font_family]">
+                                <option value="Arial" <?php selected( $font_family, 'Arial' ); ?>>Arial</option>
+                                <option value="Verdana" <?php selected( $font_family, 'Verdana' ); ?>>Verdana</option>
+                                <option value="Helvetica" <?php selected( $font_family, 'Helvetica' ); ?>>Helvetica</option>
+                                <option value="Comic Sans MS" <?php selected( $font_family, 'Comic Sans MS' ); ?>>Comic Sans MS</option>
+                                <option value="Georgia" <?php selected( $font_family, 'Georgia' ); ?>>Georgia</option>
+                                <option value="Trebuchet MS" <?php selected( $font_family, 'Trebuchet MS' ); ?>>Trebuchet MS</option>
+                                <option value="Times New Roman" <?php selected( $font_family, 'Times New Roman' ); ?>>Times New Roman</option>
+                                <option value="Tahoma" <?php selected( $font_family, 'Tahoma' ); ?>>Tahoma</option>
+                                <option value="Oswald" <?php selected( $font_family, 'Oswald' ); ?>>Oswald</option>
+                                <option value="Open Sans" <?php selected( $font_family, 'Open Sans' ); ?>>Open Sans</option>
+                                <option value="Fontdiner Swanky" <?php selected( $font_family, 'Fontdiner Swanky' ); ?>>Fontdiner Swanky</option>
+                                <option value="Crafty Girls" <?php selected( $font_family, 'Crafty Girls' ); ?>>Crafty Girls</option>
+                                <option value="Pacifico" <?php selected( $font_family, 'Pacifico' ); ?>>Pacifico</option>
+                                <option value="Satisfy" <?php selected( $font_family, 'Satisfy' ); ?>>Satisfy</option>
+                                <option value="Gloria Hallelujah" <?php selected( $font_family, 'TGloria Hallelujah' ); ?>>TGloria Hallelujah</option>
+                                <option value="Bangers" <?php selected( $font_family, 'Bangers' ); ?>>Bangers</option>
+                                <option value="Audiowide" <?php selected( $font_family, 'Audiowide' ); ?>>Audiowide</option>
+                                <option value="Sacramento" <?php selected( $font_family, 'Sacramento' ); ?>>Sacramento</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Company Name Font Color: </td>
+                        <td><input type="color" name="lt_settings[company_color]" value="<?php echo $company_color; ?>" class="small" /></td>
+                    </tr>
+                    <tr>
+                        <td>Content Font Color: </td>
+                        <td><input type="color" name="lt_settings[content_color]" value="<?php echo $content_color; ?>" class="small" /></td>
+                    </tr>
+                    <tr>
+                        <td>Location Font Color: </td>
+                        <td><input type="color" name="lt_settings[location_color]" value="<?php echo $location_color; ?>" class="small" /></td>
+                    </tr>
+                    <tr>
+                        <td>Email Font Color: </td>
+                        <td><input type="color" name="lt_settings[email_color]" value="<?php echo $email_color; ?>" class="small" /></td>
+                    </tr>
+                    <tr>
+                        <td>Website URL Font Color: </td>
+                        <td><input type="color" name="lt_settings[website_color]" value="<?php echo $website_color; ?>" class="small" /></td>
+                    </tr>
+                </table>
+                <?php submit_button(); ?>
+            </form>
+        </div>
+        <?php
+    }
+
+    /**
+     * Register and add settings
+     */
+	 
+    public function page_init() {        
+        register_setting(
+            'lumia_testimonials', // Option group
+            'lt_settings', // Option name
+            array( &$this, 'sanitize' ) // Sanitize
+        );
+     
+    }
+	
+	/**
+     * Sanitize each setting field as needed
+     *
+     * @param array $input Contains all settings fields as array keys
+     */
+	 
+	public function sanitize( $input ) {
+		 
+        $new_input = array();
+        if( isset( $input['display_mode'] ) )
+            $new_input['display_mode'] = sanitize_text_field( isset( $input['display_mode'] ) ? $input['display_mode'] : 'normal' );
+
+        if( isset( $input['background'] ) )
+            $new_input['background'] = sanitize_text_field( $input['background'] );
+			
+        if( isset( $input['font_family'] ) )
+            $new_input['font_family'] = sanitize_text_field( $input['font_family'] );
+			
+        if( isset( $input['content_color'] ) )
+            $new_input['content_color'] = sanitize_text_field( $input['content_color'] );
+			
+        if( isset( $input['location_color'] ) )
+            $new_input['location_color'] = sanitize_text_field( $input['location_color'] );
+			
+        if( isset( $input['email_color'] ) )
+            $new_input['email_color'] = sanitize_text_field( $input['email_color'] );
+			
+        if( isset( $input['company_color'] ) )
+            $new_input['company_color'] = sanitize_text_field( $input['company_color'] );
+			
+        if( isset( $input['website_color'] ) )
+            $new_input['website_color'] = sanitize_text_field( $input['website_color'] );
+
+        return $new_input;
+    }
 }
 
 add_action( 'init', 'init_post_type' );

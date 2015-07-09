@@ -1,14 +1,14 @@
 === Lumia Testimonials ===
 Contributors: pv.jinesh
 Donate link: http://weblumia.com/donate
-Tags: customer, quotations, quote, quotes, testimonial, testimonials, testimony, widget, testi
+Tags: responsive testimonial slider, testimonial slider, responsive, customer, quotations, quote, quotes, testimonial, testimonials, testimony, widget, testi
 Requires at least: 3.0
-Tested up to: 4.1
-Stable tag: 1.8.3
+Tested up to: 4.2.2
+Stable tag: 1.8.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Testimonials plugin allows you to display random or selected testimonials, or text with images.
+Responsive testimonials plugin allows you to display random or selected testimonials, or text with images.
 
 == Description ==
 
@@ -67,6 +67,8 @@ An answer to that question.
 
 == Upgrade notice ==
 
-
+ * Initial release
+ * Settings section added
+ * New layout design implemented
 
 == Arbitrary section 1 ==
