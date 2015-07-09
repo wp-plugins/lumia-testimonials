@@ -12,7 +12,7 @@ Responsive testimonials plugin allows you to display random or selected testimon
 
 == Description ==
 
-Testimonials plugin allows you to display random or selected testimonials, or text with images.
+Responsive testimonials plugin allows you to display random or selected testimonials, or text with images.
 Features
 1 Admin interface to add, edit and manage testimonials
 2 Capable of handling multiple widgets per page or post
