@@ -4,7 +4,7 @@ Donate link: http://weblumia.com/donate
 Tags: responsive testimonial slider, testimonial slider, responsive, customer, quotations, quote, quotes, testimonial, testimonials, testimony, widget, testi
 Requires at least: 3.0
 Tested up to: 4.2.2
-Stable tag: 1.8.5
+Stable tag: 1.8.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,8 +67,7 @@ An answer to that question.
 
 == Upgrade notice ==
 
- * Initial release
- * Settings section added
- * New layout design implemented
+ * Shortcode issue fixed
+ * Improved style
 
 == Arbitrary section 1 ==

@@ -106,8 +106,10 @@ class Lumia_Testimonial_Functions{
 		
 		endwhile;
 		wp_reset_query();
+        $return = ob_get_clean();
+		ob_end_clean();
         
-        echo ob_get_clean();
+		return $return;
 	}
 	
 	public function lumia_testimonial_widget(){
