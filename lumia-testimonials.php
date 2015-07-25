@@ -3,7 +3,7 @@
 Plugin Name: Lumia Testimonials
 Plugin URI: http://www.weblumia.com/lumia-testimonials
 Description: Responsive testimonials plugin allows you to display random or selected testimonials, or text with images.
-Version: 1.8.5
+Version: 1.8.6
 Author: Jinesh.P.V
 Author URI: http://www.weblumia.com/
 */
