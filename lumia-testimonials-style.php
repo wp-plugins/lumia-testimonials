@@ -96,17 +96,17 @@
 	width:31%;
     float: left;
     margin-right: 3.5%;
-    padding: 15px 0;
+    padding: 15px;
     background : <?php echo $background;?> url( images/quotes.png ) no-repeat 20px 20px;
 }
-.test_box.colum-4:nth-child( 2n+1 ) {
+.test_box.colum-4:nth-child( 3n ) {
 	margin-right: 0;   
 }
 .test_box.colum-4:first-child {
 	margin-right: 3.5%;
 }
 .test_box.colum-4 p {
-	padding: 50px 50px 0 50px;
+	padding: 0;
     text-align: center;
 }
 .test_box.colum-4 h3 {
