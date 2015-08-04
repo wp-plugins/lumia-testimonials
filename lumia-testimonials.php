@@ -3,7 +3,7 @@
 Plugin Name: Lumia Testimonials
 Plugin URI: http://www.weblumia.com/lumia-testimonials
 Description: Responsive testimonials plugin allows you to display random or selected testimonials, or text with images.
-Version: 1.8.6
+Version: 1.8.7
 Author: Jinesh.P.V
 Author URI: http://www.weblumia.com/
 */
@@ -122,8 +122,54 @@ class Lumia_Testimonials {
         wp_enqueue_style( 'lumia-googleFonts');
 		
 		if( !is_admin() ){
-			wp_register_style( 'testimonials-style', plugins_url( '/lumia-testimonials-style.php', __FILE__ ) );
+			
+			$options = get_option( 'lt_settings' );
+			$background = isset( $options['background'] ) ? esc_attr( $options['background'] ) : '';
+			$title_color = isset( $options['title_color'] ) ? esc_attr( $options['title_color'] ) : '';
+			$font_family = isset( $options['font_family'] ) ? esc_attr( $options['font_family'] ) : '';
+			$content_color = isset( $options['content_color'] ) ? esc_attr( $options['content_color'] ) : '';
+			$location_color = isset( $options['location_color'] ) ? esc_attr( $options['location_color'] ) : '';
+			$email_color = isset( $options['email_color'] ) ? esc_attr( $options['email_color'] ) : '';
+			$company_color = isset( $options['company_color'] ) ? esc_attr( $options['company_color'] ) : '';
+			$website_color = isset( $options['website_color'] ) ? esc_attr( $options['website_color'] ) : '';
+			wp_register_style( 'testimonials-style', plugins_url( '/lumia-testimonials-style.css', __FILE__ ) );
 			wp_enqueue_style( 'testimonials-style' );
+			
+			$custom_css   = ".test_box{
+										background: " . $background . ";
+										font:14px " . $font_family . ";
+										color: " . $content_color . ";
+									}.test_box strong{
+										color: " . $company_color . ";
+									}
+									.test_box small{
+										color: " . $location_color . ";
+									}
+									.test_box span.testi_email a{
+										color: " . $email_color . ";
+									}.test_box span.testi_web a{
+										color: " . $website_color . ";
+									}.test_box.colum-4 {
+										background :  " . $background . " url( images/quotes.png ) no-repeat 20px 20px;
+									}.test_box.colum-4 h3 {
+										color: " . $company_color . ";
+									}
+									.test_box.colum-4 small {
+										color: " . $location_color . ";
+									}.test_box.colum-4 ul li.email {
+										color: " . $website_color . ";
+									}
+									.test_box.colum-4 ul li.email a {
+										color: " . $website_color . ";
+									}
+									.test_box.colum-4 ul li.web a {
+										color: " . $website_color . ";
+									}
+									.test_box.colum-4 ul li.email a:hover,
+									.test_box.colum-4 ul li.web a:hover {
+										color: " . $location_color . ";
+									}";
+			wp_add_inline_style( 'testimonials-style', $custom_css );
 		}
 	}
 	
